@@ -1,0 +1,21 @@
+.profile-image {
+    height: 60px;            
+    width: 60px;             
+    border-radius: 50%;      
+    object-fit: cover;       
+  }
+  
+  @media (max-width: 768px) {
+    .profile-image {
+      height: 40px;  
+      width: 40px;  
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .profile-image {
+      height: 30px;  
+      width: 30px;  
+    }
+  }
+  

@@ -1,0 +1,16 @@
+.nav-item{
+    color:aliceblue;
+    transition: color 0.3s;
+    font-family: monospace, monospace;
+    cursor: pointer;
+}
+.nav-item:hover{
+ text-decoration: underline;
+ color:#7DCEA0 ;
+
+}
+.Navbar-band{
+    font-family: monospace,monospace; 
+}
+
+
