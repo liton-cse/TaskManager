@@ -5,6 +5,7 @@ import { Button } from "react-bootstrap"; // Import Button
 import "./pages.css";
 
 const ResetPassword = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const { id, token } = useParams(); // Get params from URL
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
@@ -20,13 +21,15 @@ const ResetPassword = () => {
 
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/auth/reset-password/${id}/${token}`,
+        `${API_BASE_URL}/api/auth/reset-password/${id}/${token}`,
         { password },
         { headers: { "Content-Type": "application/json" } }
       );
 
-      setMessage(data.message || "Password reset successful! Redirecting to login...");
-      
+      setMessage(
+        data.message || "Password reset successful! Redirecting to login..."
+      );
+
       setTimeout(() => navigate("/login"), 2000);
     } catch (error) {
       setError(error.response?.data?.message || "Something went wrong");

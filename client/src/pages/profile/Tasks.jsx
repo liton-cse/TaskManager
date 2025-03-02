@@ -3,13 +3,14 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 
 const Tasks = () => {
-  const [tasks, setTasks] = useState([]);  // Initialize tasks as an empty array
-  const [loading, setLoading] = useState(true);  // To show a loading state
-  const [error, setError] = useState(null);  // For error handling
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const [tasks, setTasks] = useState([]); // Initialize tasks as an empty array
+  const [loading, setLoading] = useState(true); // To show a loading state
+  const [error, setError] = useState(null); // For error handling
 
   useEffect(() => {
     axios
-      .get("http://localhost:5000/api/tasks/", {
+      .get(`${API_BASE_URL}/api/tasks/`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {
@@ -24,7 +25,7 @@ const Tasks = () => {
         setError("Error fetching tasks.");
         console.error("Error fetching tasks:", err);
       })
-      .finally(() => setLoading(false));  // Stop loading after fetch
+      .finally(() => setLoading(false)); // Stop loading after fetch
   }, []);
 
   // Show loading message or error if any
@@ -38,10 +39,10 @@ const Tasks = () => {
 
   const handleDelete = async (taskId) => {
     try {
-      await axios.delete(`http://localhost:5000/api/tasks/${taskId}`, {
+      await axios.delete(`${API_BASE_URL}/api/tasks/${taskId}`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });
-      setTasks(tasks.filter(task => task._id !== taskId));
+      setTasks(tasks.filter((task) => task._id !== taskId));
       alert("Task deleted successfully.");
       // Optionally refetch tasks or remove the deleted task from state
     } catch (err) {
@@ -51,7 +52,6 @@ const Tasks = () => {
   };
 
   return (
-    
     <div className="p-5 m-5">
       <h2 className="text-2xl font-semibold mb-4"> All Tasks</h2>
       <Link to="/tasks/new">
@@ -79,7 +79,9 @@ const Tasks = () => {
                 <tr key={task._id} className="border-b">
                   <td className="px-4 py-2 ">{task.title}</td>
                   <td className="px-4 py-2 ">{task.description}</td>
-                  <td className="px-4 py-2 ">{new Date(task.dueDate).toLocaleDateString()}</td>
+                  <td className="px-4 py-2 ">
+                    {new Date(task.dueDate).toLocaleDateString()}
+                  </td>
                   <td className="px-4 py-2">
                     <span
                       className={`font-semibold ${
@@ -117,7 +119,5 @@ const Tasks = () => {
     </div>
   );
 };
-
-
 
 export default Tasks;

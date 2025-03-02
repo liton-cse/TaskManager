@@ -1,32 +1,34 @@
 /* eslint-disable react/no-unescaped-entities */
-import React from 'react'; 
+import React from "react";
 import "./pages.css";
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { Button } from "react-bootstrap";
-import axios from 'axios';
+import axios from "axios";
+
 const Login = () => {
-  const navigate= useNavigate();
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
-  
+
   const [message, setMessage] = useState("");
-  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage("");
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${API_BASE_URL}/api/auth/login`,
         { email, password },
         { headers: { "Content-Type": "application/json" } }
       );
 
       if (data.token) {
-      // Save token in localStorage
-      localStorage.setItem("token", data.token);
+        // Save token in localStorage
+        localStorage.setItem("token", data.token);
         setMessage("Login Successful");
         navigate("/tasks");
       } else {
@@ -34,8 +36,11 @@ const Login = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-      setErrorMessage(error.response?.data?.message || "An unexpected error occurred. Please try again.");
-    } 
+      setErrorMessage(
+        error.response?.data?.message ||
+          "An unexpected error occurred. Please try again."
+      );
+    }
   };
   return (
     <div className="addUser">
@@ -70,9 +75,7 @@ const Login = () => {
         </div>
       </form>
       <div className="login">
-        <Link to="/forgot-password">
-          forgotten password
-        </Link>
+        <Link to="/forgot-password">forgotten password</Link>
         <p>Don't have Account? </p>
         <Link to="/register" className="btn btn-primary">
           Sign Up

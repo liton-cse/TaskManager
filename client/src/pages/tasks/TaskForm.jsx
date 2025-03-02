@@ -5,9 +5,9 @@ import React from "react";
 import "../auth/pages.css";
 
 const TaskForm = () => {
-  const { id } = useParams();  // Get task ID from URL
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
+  const { id } = useParams(); // Get task ID from URL
   const navigate = useNavigate();
-
 
   // State variables
   const [title, setTitle] = useState("");
@@ -22,7 +22,7 @@ const TaskForm = () => {
     if (id) {
       setLoading(true);
       axios
-        .get(`http://localhost:5000/api/tasks/${id}`, {
+        .get(`${API_BASE_URL}/api/tasks/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then((res) => {
@@ -46,16 +46,18 @@ const TaskForm = () => {
 
     try {
       if (id) {
-        await axios.put(`http://localhost:5000/api/tasks/${id}`, taskData, {
+        await axios.put(`${API_BASE_URL}/api/tasks/${id}`, taskData, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
       } else {
-        await axios.post("http://localhost:5000/api/tasks/", taskData, {
-          headers: { Authorization: `Bearer ${localStorage.getItem("token")}`,
-          "Content-Type": "application/json", },
+        await axios.post(`${API_BASE_URL}/api/tasks/`, taskData, {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+            "Content-Type": "application/json",
+          },
         });
       }
-      navigate("/tasks");  // Redirect to tasks list after saving
+      navigate("/tasks"); // Redirect to tasks list after saving
     } catch (err) {
       setError("Error saving task. Please try again.");
       console.error("Error saving task:", err);
@@ -107,9 +109,9 @@ const TaskForm = () => {
             {id ? "Update Task" : "Create Task"}
           </button>
         </div>
-        
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
+
+        {loading && <p>Loading...</p>}
+        {error && <p style={{ color: "red" }}>{error}</p>}
       </form>
     </div>
   );

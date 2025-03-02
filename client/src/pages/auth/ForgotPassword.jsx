@@ -1,10 +1,11 @@
 /* eslint-disable react/no-unescaped-entities */
-import React, { useState } from "react"; 
+import React, { useState } from "react";
 import "./pages.css";
 import { Button } from "react-bootstrap";
 import axios from "axios";
 
 const ForgotPassword = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
@@ -18,14 +19,16 @@ const ForgotPassword = () => {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/auth/forgot-password",
+        `${API_BASE_URL}/api/auth/forgot-password`,
         { email },
         { headers: { "Content-Type": "application/json" } }
       );
-      
+
       setMessage(data.message || "Password reset link sent! Check your email.");
     } catch (error) {
-      setError(error.response?.data?.message || "Something went wrong. Try again.");
+      setError(
+        error.response?.data?.message || "Something went wrong. Try again."
+      );
     } finally {
       setLoading(false);
     }

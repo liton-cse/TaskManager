@@ -5,13 +5,14 @@ import React from "react";
 import "./users.css";
 
 const Users = () => {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
     axios
-      .get('http://localhost:5000/api/auth/profile', {
+      .get(`${API_BASE_URL}/api/auth/profile`, {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       })
       .then((res) => {
@@ -37,7 +38,9 @@ const Users = () => {
           <table className="min-w-full bg-white">
             <thead>
               <tr className="bg-gray-100">
-                <th className="px-4 py-2 text-left text-black">Profile Picture</th>
+                <th className="px-4 py-2 text-left text-black">
+                  Profile Picture
+                </th>
                 <th className="px-4 py-2 text-left text-black">Username</th>
                 <th className="px-4 py-2 text-left text-black">Email</th>
                 <th className="px-4 py-2 text-left text-black">Bio</th>
@@ -48,7 +51,9 @@ const Users = () => {
               <tr key={user._id} className="border-b">
                 <td className="px-4 py-2">
                   <img
-                    src={`http://localhost:5000/api/auth/${user.profilePicture.split('/').pop()}`}
+                    src={`${API_BASE_URL}/api/auth/${user.profilePicture
+                      .split("/")
+                      .pop()}`}
                     alt="Profile"
                     className="profile-image" // 40px, rounded to circle
                   />

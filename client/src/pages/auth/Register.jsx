@@ -5,6 +5,7 @@ import axios from "axios";
 import "./pages.css";
 
 function Register() {
+  const API_BASE_URL = import.meta.env.VITE_API_BASE_URL;
   const navigate = useNavigate();
   const { id } = useParams(); // To get the user id for editing (if available)
   const [username, setUserName] = useState("");
@@ -21,7 +22,7 @@ function Register() {
     if (id) {
       // Fetch user details for editing
       axios
-        .get(`http://localhost:5000/api/auth/profile/${id}`, {
+        .get(`${API_BASE_URL}/api/auth/profile/${id}`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         })
         .then((res) => {
@@ -56,7 +57,7 @@ function Register() {
       if (id) {
         // Editing user
         response = await axios.put(
-          `http://localhost:5000/api/auth/profile/${id}`,
+          `${API_BASE_URL}/api/auth/profile/${id}`,
           formData,
           {
             headers: {
@@ -68,7 +69,7 @@ function Register() {
       } else {
         // Registering new user
         response = await axios.post(
-          'http://localhost:5000/api/auth/register',
+          `${API_BASE_URL}/api/auth/register`,
           formData,
           {
             headers: { "Content-Type": "multipart/form-data" },
@@ -76,9 +77,11 @@ function Register() {
         );
       }
 
-      if (response.data.token || response.data.message) {  
-        setMessage(id ? "User updated successfully" : "User registered successfully");
-        
+      if (response.data.token || response.data.message) {
+        setMessage(
+          id ? "User updated successfully" : "User registered successfully"
+        );
+
         // Ensure navigation after state update
         setTimeout(() => {
           if (id) {
@@ -90,7 +93,6 @@ function Register() {
       } else {
         setErrorMessage(id ? "Update failed" : "Registration failed");
       }
-      
     } catch (error) {
       console.error("Error:", error);
       // Enhanced error handling
