@@ -51,9 +51,7 @@ const Users = () => {
               <tr key={user._id} className="border-b">
                 <td className="px-4 py-2">
                   <img
-                    src={`${API_BASE_URL}/api/auth/${user.profilePicture
-                      .split("/")
-                      .pop()}`}
+                    src={`${API_BASE_URL}/api/auth/${user.profilePicture}`}
                     alt="Profile"
                     className="profile-image" // 40px, rounded to circle
                   />
