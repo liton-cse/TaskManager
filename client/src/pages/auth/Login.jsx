@@ -79,7 +79,7 @@ const Login = () => {
         <Link to="/forgot-password">forgotten password</Link>
         <p>Don't have Account? </p>
         <Link to="/register" className="btn btn-primary">
-          Sign Up
+          Register
         </Link>
       </div>
       {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}

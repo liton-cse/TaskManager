@@ -187,8 +187,8 @@ function Register() {
       {!id && (
         <div className="login">
           <p>{"Already have an account?"}</p>
-          <Link to={"/register"} className="btn btn-primary">
-            {"Register"}
+          <Link to={"/login"} className="btn btn-primary">
+            {"Login"}
           </Link>
         </div>
       )}
