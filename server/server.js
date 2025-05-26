@@ -14,8 +14,8 @@ const app = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 const allowedOrigin = [
+    'http://localhost:5000',
     'https://taskmanager-1-0gav.onrender.com',
-    'http://localhost:5173/'
 ]
 
 app.use(cors({
