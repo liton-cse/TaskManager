@@ -7,6 +7,7 @@
     border-radius: 10px;
     box-shadow: 1px 1px 8px rgba(0, 0, 0, 0.065);
     font-family: monospace, monospace;
+    box-sizing: border-box;
 }
 
 .addUserForm .inputGroup {
@@ -84,8 +85,9 @@
 
 @media (max-width: 480px) {
     .addUser {
-        width: 100%; 
-        margin: 40px auto; 
+        width: 90%; 
+        margin: 3.5rem auto; 
+        box-sizing: border-box;
     }
 
     .addUserForm .inputGroup label,
